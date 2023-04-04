@@ -19,38 +19,6 @@ BoatPlace string_to_place(String place) {
 
 }
 //*************************************************************************************************
-char* get_name(BoatDataType* boat) {
-    return boat->name;
-}
-//*************************************************************************************************
-int get_length(BoatDataType* boat) {
-    return boat->length;
-}
-//*************************************************************************************************
-BoatPlace get_place(BoatDataType* boat) {
-    return boat->place;
-}
-//*************************************************************************************************
-int get_info_slip(BoatDataType* boat) {
-    return boat->info.slip_number;
-}
-//*************************************************************************************************
-char get_info_land(BoatDataType* boat) {
-    return boat->info.bay_letter;
-}
-//*************************************************************************************************
-char* get_info_trailer(BoatDataType* boat) {
-    return boat->info.trailor_tag;
-}
-//*************************************************************************************************
-int get_info_storage(BoatDataType* boat) {
-    return boat->info.storage_number;
-}
-//*************************************************************************************************
-float get_amount_owed(BoatDataType* boat) {
-    return boat->amount_owed;
-}
-//*************************************************************************************************
 void set_name(BoatDataType* boat, String name) {
     strcpy(boat->name, name);
     return;
@@ -67,13 +35,13 @@ void set_place(BoatDataType* boat, String place) {
 }
 //*************************************************************************************************
 void set_amount_owed(BoatDataType* boat, float amount) {
-    boat->amount_owed = amount;
+    boat->amount_owed = (float)amount;
     return;
 }
 //*************************************************************************************************
 void set_info(BoatDataType* boat, char* input) {
     
-    BoatPlace place = get_place(boat);
+    BoatPlace place = boat->place;
 
     if (place == slip) {
 	boat->info.slip_number = atoi(input);
@@ -89,7 +57,7 @@ void set_info(BoatDataType* boat, char* input) {
 //*************************************************************************************************
 char* place_to_string(BoatDataType* boat) {
     
-    BoatPlace place = get_place(boat);
+    BoatPlace place = boat->place;
 
     if (place == slip) {
 	return "slip";
@@ -103,3 +71,22 @@ char* place_to_string(BoatDataType* boat) {
 
 }
 //*************************************************************************************************
+void print_boat(BoatDataType* boat) {
+ 
+    BoatPlace place = boat->place;
+
+    if (place == slip) {
+	printf("%-20s %3d' %7s   #%3d   Owes $%7.2f\n", boat->name, boat->length,
+			place_to_string(boat), boat->info.slip_number, boat->amount_owed);
+    } else if (place == land) {
+	printf("%-20s %3d' %7s      %c  Owes $%7.2f\n", boat->name, boat->length,
+			place_to_string(boat), boat->info.bay_letter, boat->amount_owed);
+    } else if (place == trailor) {
+	printf("%-20s %3d' %7s %6s Owes $%7.2f\n", boat->name, boat->length,
+			place_to_string(boat), boat->info.trailor_tag, boat->amount_owed);
+    } else {
+	printf("%-20s %3d' %7s   #%3d   Owes $%7.2f\n", boat->name, boat->length,
+			place_to_string(boat), boat->info.storage_number, boat->amount_owed);
+    }
+
+}
