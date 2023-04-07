@@ -28,5 +28,7 @@ typedef struct {
     float amount_owed;
 } BoatDataType;
 
+typedef BoatDataType* DatabaseType[DATABASE_SIZE];
+
 #endif
 //*************************************************************************************************

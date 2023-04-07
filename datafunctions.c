@@ -6,6 +6,14 @@
 #include "datafunctions.h"
 #include "constants.h"
 //*************************************************************************************************
+int compare_boats(BoatDataType* boat1, BoatDataType* boat2) {
+    return strcasecmp(get_name(boat1), get_name(boat2));
+}
+//*************************************************************************************************
+int compare_entry(String entry, BoatDataType* boat) {
+    return strcasecmp(entry, get_name(boat));
+}
+//*************************************************************************************************
 BoatPlace string_to_place(String place) {
 
     if (strcasecmp(place, "slip") == 0) {
