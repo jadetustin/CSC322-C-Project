@@ -20,12 +20,11 @@ int main(void) {
 	sample_data[index] = entry;
     }
 
-    set_name(sample_data[0], "Example Name");
-    set_length(sample_data[0], 69);
-    set_place(sample_data[0], "slip");
-    set_info(sample_data[0], "27");
-    float amount = 55.21;
-    printf("Value of amount is       $%7.2f\n", amount);
+    set_name(sample_data[0], "You Stupid!");
+    set_length(sample_data[0], 21);
+    set_place(sample_data[0], "storage");
+    set_info(sample_data[0], "14");
+    float amount = 1123.13;
     set_amount_owed(sample_data[0], amount);
 
     printf("This is the amount owed: $%7.2f\n", sample_data[0]->amount_owed);

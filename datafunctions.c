@@ -98,10 +98,10 @@ void print_boat(BoatDataType* boat) {
 	printf("%-20s %3d' %7s   #%3d   Owes $%7.2f\n", get_name(boat), get_length(boat),
 			place_to_string(boat), boat->info.slip_number, get_amount_owed(boat));
     } else if (place == land) {
-	printf("%-20s %3d' %7s      %c  Owes $%7.2f\n", get_name(boat), get_length(boat),
+	printf("%-20s %3d' %7s      %c   Owes $%7.2f\n", get_name(boat), get_length(boat),
 			place_to_string(boat), boat->info.bay_letter, get_amount_owed(boat));
     } else if (place == trailor) {
-	printf("%-20s %3d' %7s %6s Owes $%7.2f\n", get_name(boat), get_length(boat),
+	printf("%-20s %3d' %7s %6s   Owes $%7.2f\n", get_name(boat), get_length(boat),
 			place_to_string(boat), boat->info.trailor_tag, get_amount_owed(boat));
     } else {
 	printf("%-20s %3d' %7s   #%3d   Owes $%7.2f\n", boat->name, boat->length,
