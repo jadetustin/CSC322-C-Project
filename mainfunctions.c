@@ -17,17 +17,26 @@ BoatDataType* add_boat(String entry) {
         exit(EXIT_FAILURE);
     }
 
+    printf("Malloc successful.\n");
+
     receive = strtok(entry, SEPARATOR);
+    printf("Name is %s. \n", receive);
     set_name(new_boat, receive);
+    printf("Set name.\n");
     receive = strtok(NULL, SEPARATOR);
+    printf("Number is %s in string form. \n", receive);
     set_length(new_boat, atoi(receive));
+    printf("Set length.\n");
     receive = strtok(NULL, SEPARATOR);
     set_place(new_boat, receive);
+    printf("Set place.\n");
     receive = strtok(NULL, SEPARATOR);
     set_info(new_boat, receive);
+    printf("Set info.\n");
     receive = strtok(NULL, SEPARATOR);
     set_amount_owed(new_boat, ((float)atof(receive)));
-
+    printf("Set amount owed.\n");
+    
     return new_boat;
 
 }
@@ -47,7 +56,7 @@ void add_to_database(DatabaseType database, int* size) {
     printf("Please enter the boat data in CSV format                 : ");
     scanf(" %s", userentry);
     database[*size] = add_boat(userentry);
-    *size++;
+    *size = *size + 1;
     qsort(database, *size, sizeof(BoatDataType), compare_boats);
     return;
     
@@ -63,7 +72,7 @@ void remove_from_database(DatabaseType database, int* size) {
     for (index = 0; index < *size; index++) {
         if ((compare_entry(userentry, database[index])) == 0) {
             remove_boat(database[index]);
-	    *size--;
+	    *size = *size - 1;
 	    qsort(database, *size, sizeof(BoatDataType), compare_boats);
 	    return;
         }
@@ -117,6 +126,19 @@ void payment(DatabaseType database, int size) {
 
     printf("No boat with that name.\n");
     return;
+
+}
+//*************************************************************************************************
+DatabaseType* init(void) {
+    
+    DatabaseType* init;
+
+    if ((init = (DatabaseType *)malloc(sizeof(DatabaseType))) == NULL) {
+        perror("Cannot malloc.");
+        exit(EXIT_FAILURE);
+    }
+
+    return init;
 
 }
 //*************************************************************************************************
