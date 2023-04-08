@@ -30,30 +30,25 @@ int main(void) {
 	    case 'i':
 	    case 'I':
 		print_database(database, size);
-	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'a':
 	    case 'A':
 	        add_to_database(database, &size);
-	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'r':
 	    case 'R':
                 remove_from_database(database, &size);
-	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'p':
 	    case 'P':
 		payment(database, size);
-	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'm':
 	    case 'M':
 		new_month(database, size);
-	        printf("Valid option %c\n", userinput);
 		break;
 	    default:
-	        printf("Invalid option %c\n", userinput);
+	        printf("Invalid option. %c\n", userinput);
 		break;
 
 	}
@@ -65,6 +60,9 @@ int main(void) {
     // save the file using the same name and exit.
     printf("\n");
     printf("Exiting the Boat Management System\n");
+
+    free_database(database, size);
+
     return EXIT_SUCCESS;
 
 }

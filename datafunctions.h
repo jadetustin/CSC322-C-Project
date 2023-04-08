@@ -5,6 +5,8 @@
 #include "datatypes.h"
 #include "constants.h"
 //*************************************************************************************************
+int compare_boats(const void* boat1, const void* boat2);
+int compare_entry(String entry, BoatDataType* boat);
 BoatPlace string_to_place(String place);
 void set_name(BoatDataType* boat, String name);
 void set_length(BoatDataType* boat, int length);

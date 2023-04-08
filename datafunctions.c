@@ -6,8 +6,8 @@
 #include "datafunctions.h"
 #include "constants.h"
 //*************************************************************************************************
-int compare_boats(BoatDataType* boat1, BoatDataType* boat2) {
-    return strcasecmp(get_name(boat1), get_name(boat2));
+int compare_boats(const void* boat1, const void* boat2) {
+    return strcasecmp(get_name((BoatDataType* )boat1), get_name((BoatDataType*) boat2));
 }
 //*************************************************************************************************
 int compare_entry(String entry, BoatDataType* boat) {

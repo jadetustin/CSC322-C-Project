@@ -1,5 +1,5 @@
 //*************************************************************************************************
-#include <tdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "mainfunctions.h"
@@ -7,7 +7,7 @@
 #include "datafunctions.h"
 #include "constants.h"
 //*************************************************************************************************
-BoatDataType* add_boat(String userinput) {
+BoatDataType* add_boat(String entry) {
 
     BoatDataType* new_boat;
     char* receive;
@@ -46,7 +46,7 @@ void add_to_database(DatabaseType database, int* size) {
 
     printf("Please enter the boat data in CSV format                 : ");
     scanf(" %s", userentry);
-    database[size] = add_boat(userentry);
+    database[*size] = add_boat(userentry);
     *size++;
     qsort(database, *size, sizeof(BoatDataType), compare_boats);
     return;
@@ -56,6 +56,7 @@ void add_to_database(DatabaseType database, int* size) {
 void remove_from_database(DatabaseType database, int* size) {
 
     String userentry;
+    int index;
 
     printf("Please enter the boat name                               : ");
     scanf(" %s", userentry);
@@ -116,6 +117,16 @@ void payment(DatabaseType database, int size) {
 
     printf("No boat with that name.\n");
     return;
+
+}
+//*************************************************************************************************
+void free_database(DatabaseType database, int size) {
+
+    int index = 0;
+
+    for (index = 0; index < size; index++) {
+	remove_boat(database[index]);
+    }
 
 }
 //*************************************************************************************************
