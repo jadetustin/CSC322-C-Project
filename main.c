@@ -1,31 +1,25 @@
 //*************************************************************************************************
 // main file for boat management program.
-// contains protocols for basic menu navigation and loading/saving.
+// contains protocols for basic menu navigation.
+// remainder of functionality has been delegated to other files.
 //*************************************************************************************************
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "constants.h"
+#include "datatypes.h"
+#include "datafunctions.h"
+#include "mainfunctions.h"
 //*************************************************************************************************
-// function declarations go here.
-//*************************************************************************************************
-int main(int argc, char* argv[]) {
+int main(void) {
 
     char initinput, userinput;
+    DatabaseType database;
+    int size = 0;
 
     // print welcome message.
     printf("Welcome to the Boat Management System\n");
     printf("-------------------------------------\n");
-
-    // load the file, using the command-line argument as the name of the file.
-    if (argc < 2) {
-	printf("No file name was provided. Would you like to provide one? ");
-	printf("(y for yes [default], n for no): ");
-	scanf(" %c", &initinput);
-	if (initinput == 'n' || initinput == 'N') {
-	    printf("No file name provided!\n");
-	    printf("Exiting the Boat Management System\n");
-	    exit(EXIT_FAILURE);
-	}
-    }
 
     // main menu implementation with a switch statement.
     printf("\n");
@@ -35,27 +29,27 @@ int main(int argc, char* argv[]) {
 	switch(userinput) {
 	    case 'i':
 	    case 'I':
-		// call print inventory function
+		print_database(database, size);
 	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'a':
 	    case 'A':
-	        // call add function
+	        add_to_database(database, &size);
 	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'r':
 	    case 'R':
-                // call remove function
+                remove_from_database(database, &size);
 	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'p':
 	    case 'P':
-		// call payment function
+		payment(database, size);
 	        printf("Valid option %c\n", userinput);
 		break;
 	    case 'm':
 	    case 'M':
-		// call month function
+		new_month(database, size);
 	        printf("Valid option %c\n", userinput);
 		break;
 	    default:
