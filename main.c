@@ -14,7 +14,7 @@
 int main(void) {
 
     char initinput, userinput;
-    DatabaseType* database = init();
+    DatabaseType database;
     int size = 0;
 
     // print welcome message.
@@ -29,23 +29,23 @@ int main(void) {
 	switch(userinput) {
 	    case 'i':
 	    case 'I':
-		print_database(*database, size);
+		print_database(database, size);
 		break;
 	    case 'a':
 	    case 'A':
-	        add_to_database(*database, &size);
+	        add_to_database(database, &size);
 		break;
 	    case 'r':
 	    case 'R':
-                remove_from_database(*database, &size);
+                remove_from_database(database, &size);
 		break;
 	    case 'p':
 	    case 'P':
-		payment(*database, size);
+		payment(database, size);
 		break;
 	    case 'm':
 	    case 'M':
-		new_month(*database, size);
+		new_month(database, size);
 		break;
 	    default:
 	        printf("Invalid option. %c\n", userinput);
@@ -54,14 +54,14 @@ int main(void) {
 	}
 	printf("\n");
 	printf("(I)nventory, (A)dd, (R)emove, (P)ayment, (M)onth, e(X)it : ");
-	scanf(" %c", &userinput);
+	scanf(" %1c", &userinput);
     }
     
     // save the file using the same name and exit.
     printf("\n");
     printf("Exiting the Boat Management System\n");
 
-    free_database(*database, size);
+    free_database(database, size);
 
     return EXIT_SUCCESS;
 

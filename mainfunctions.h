@@ -13,7 +13,6 @@ void remove_from_database(DatabaseType database, int* size);
 void print_database(DatabaseType database, int size);
 void new_month(DatabaseType database, int size);
 void payment(DatabaseType database, int size);
-DatabaseType* init(void);
 void free_database(DatabaseType database, int size);
 //*************************************************************************************************
 #endif
