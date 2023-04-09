@@ -11,11 +11,29 @@
 #include "datafunctions.h"
 #include "mainfunctions.h"
 //*************************************************************************************************
-int main(void) {
+int main(int argc, char* argv[]) {
 
     char initinput, userinput;
+    FILE* data_file;
     DatabaseType database;
     int size = 0;
+
+    if (argc < 2) {
+	printf("No file provided! Exiting...\n");
+	exit(EXIT_FAILURE);
+    }
+
+    if ((data_file = fopen(argv[1], "r")) == NULL) {
+	perror("Cannot open file!");
+	exit(EXIT_FAILURE);
+    }
+
+    populate(database, &size, data_file);
+
+    if (fclose(data_file) == EOF) {
+        perror("Cannot close file!");
+        exit(EXIT_FAILURE);
+    }
 
     // print welcome message.
     printf("Welcome to the Boat Management System\n");
@@ -57,9 +75,21 @@ int main(void) {
 	scanf(" %1c", &userinput);
     }
     
-    // save the file using the same name and exit.
+    // save the file using the same name, free the data, and exit.
     printf("\n");
     printf("Exiting the Boat Management System\n");
+
+    if ((data_file = fopen(argv[1], "w+")) == NULL) {
+	perror("Cannot open file!");
+	exit(EXIT_FAILURE);
+    }
+
+    save(database, &size, data_file);
+
+    if (fclose(data_file) == EOF) {
+        perror("Cannot close file!");
+        exit(EXIT_FAILURE);
+    }
 
     free_database(database, size);
 

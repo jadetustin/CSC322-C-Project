@@ -7,6 +7,68 @@
 #include "datafunctions.h"
 #include "constants.h"
 //*************************************************************************************************
+void save(DatabaseType database, int* size, FILE* file) {
+
+    int index;
+    BoatPlace place;
+    BoatDataType* boat;
+
+    for (index = 0; index < *size; index++) {
+        
+	boat = database[index];
+	place = get_place(boat);
+
+	if (place == slip) {
+            fprintf(file, "%s,%d,%s,%d,%f\n", get_name(boat), get_length(boat),
+                        place_to_string(boat), boat->info.slip_number, get_amount_owed(boat));
+    	} else if (place == land) {
+	    fprintf(file, "%s,%d,%s,%c,%f\n", get_name(boat), get_length(boat),
+                        place_to_string(boat), boat->info.bay_letter, get_amount_owed(boat));
+    	} else if (place == trailor) {
+            fprintf(file, "%s,%d,%s,%s,%f\n", get_name(boat), get_length(boat),
+                        place_to_string(boat), boat->info.trailor_tag, get_amount_owed(boat));
+    	} else {
+	    fprintf(file, "%s,%d,%s,%d,%f\n", boat->name, boat->length,
+                        place_to_string(boat), boat->info.storage_number, get_amount_owed(boat));
+    	}
+    
+    }
+
+    return;
+    
+}
+//*************************************************************************************************
+void populate(DatabaseType database, int* size, FILE* file) {
+
+    String userentry;
+
+    while (fgets(userentry, STRING_LENGTH, file) != NULL) {
+        database[*size] = add_boat(userentry);
+        *size = *size + 1;
+    }
+
+    // qsort(database, *size, sizeof(BoatDataType), compare_boats);
+    return;
+    
+}
+//*************************************************************************************************
+void cleanup(DatabaseType database, int* size) {
+
+    int index = 0;
+    BoatDataType* temp;
+
+    for (index = 0; index < *size; index++) {
+	if (database[index] == NULL) {
+	    temp = database[*size - 1];
+	    database[*size - 1] = NULL;
+	    database[index] = temp;
+	    return;
+	}
+    }
+
+    return;
+}
+//*************************************************************************************************
 BoatDataType* add_boat(String entry) {
 
     BoatDataType* new_boat;
@@ -35,7 +97,6 @@ BoatDataType* add_boat(String entry) {
 void remove_boat(BoatDataType* boat) {
     
     free(boat);
-    boat = NULL;
     return;
 
 }
@@ -49,7 +110,7 @@ void add_to_database(DatabaseType database, int* size) {
     fgets(userentry, STRING_LENGTH, stdin);
     database[*size] = add_boat(userentry);
     *size = *size + 1;
-    qsort(database, *size, sizeof(BoatDataType), compare_boats);
+    // qsort(database, *size, sizeof(BoatDataType), compare_boats);
     return;
     
 }
@@ -62,13 +123,16 @@ void remove_from_database(DatabaseType database, int* size) {
     fgetc(stdin);
     printf("Please enter the boat name                               : ");
     fgets(userentry, STRING_LENGTH, stdin);
+    
+    userentry[(strlen(userentry) - 1)] = '\0';
 
-    // need to fix bug here. will keep trailing newline character
     for (index = 0; index < *size; index++) {
         if ((compare_entry(userentry, database[index])) == 0) {
             remove_boat(database[index]);
+	    database[index] = NULL;
+	    cleanup(database, size);
 	    *size = *size - 1;
-	    qsort(database, *size, sizeof(BoatDataType), compare_boats);
+	    // qsort(database, *size, sizeof(BoatDataType), compare_boats);
 	    return;
         }
     }
@@ -111,10 +175,14 @@ void payment(DatabaseType database, int size) {
     printf("Please enter the boat name                               : ");
     fgets(userentry, STRING_LENGTH, stdin);
 
+    userentry[(strlen(userentry) - 1)] = '\0';
+
     for (index = 0; index < size; index++) {
 	if ((compare_entry(userentry, database[index])) == 0) {
 	    printf("Please enter the amount to be paid                       : ");
-	    scanf(" %f", amount);
+	    fgets(userentry, STRING_LENGTH, stdin);
+            userentry[(strlen(userentry) - 1)] = '\0';
+	    amount = (float)(atof(userentry));
 	    make_payment(database[index], amount);
 	    return;
 	}
