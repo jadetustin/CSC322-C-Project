@@ -9,6 +9,7 @@
 void save(DatabaseType database, int* size, FILE* file);
 void populate(DatabaseType database, int* size, FILE* file);
 void cleanup(DatabaseType database, int* size);
+void provisional_sort(DatabaseType database, int* size);
 BoatDataType* add_boat(String userinput);
 void remove_boat(BoatDataType* boat);
 void add_to_database(DatabaseType database, int* size);

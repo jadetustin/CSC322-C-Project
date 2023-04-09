@@ -47,6 +47,8 @@ void populate(DatabaseType database, int* size, FILE* file) {
         *size = *size + 1;
     }
 
+    provisional_sort(database, size);
+    
     return;
     
 }
@@ -66,6 +68,27 @@ void cleanup(DatabaseType database, int* size) {
     }
 
     return;
+}
+//*************************************************************************************************
+void provisional_sort(DatabaseType database, int* size) {
+    
+    int index = 0;
+    int swapped = 1;
+    BoatDataType* temp;
+
+    swapped = 1;
+    while (swapped != 0) {
+        swapped = 0;
+        for (index = 0; index < *size - 1; index++) {
+            if ((compare_boats(database[index], database[index + 1])) > 0) {
+                temp = database[index];
+                database[index] = database[index + 1];
+                database[index + 1] = temp;
+                swapped = 1;
+            }
+        }
+    }
+
 }
 //*************************************************************************************************
 BoatDataType* add_boat(String entry) {
@@ -109,6 +132,7 @@ void add_to_database(DatabaseType database, int* size) {
     fgets(userentry, STRING_LENGTH, stdin);
     database[*size] = add_boat(userentry);
     *size = *size + 1;
+    provisional_sort(database, size);
     // qsort(database, *size, sizeof(BoatDataType), compare_boats);
     return;
     
@@ -131,6 +155,7 @@ void remove_from_database(DatabaseType database, int* size) {
 	    database[index] = NULL;
 	    cleanup(database, size);
 	    *size = *size - 1;
+            provisional_sort(database, size);
 	    // qsort(database, *size, sizeof(BoatDataType), compare_boats);
 	    return;
         }

@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 		new_month(database, size);
 		break;
 	    default:
-	        printf("Invalid option. %c\n", userinput);
+	        printf("Invalid option %c.\n", userinput);
 		break;
 
 	}

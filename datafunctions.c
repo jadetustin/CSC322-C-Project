@@ -144,7 +144,7 @@ void month(BoatDataType* boat) {
 void make_payment(BoatDataType* boat, float payment) {
 
     if (payment > get_amount_owed(boat)) {
-	printf("That is more than the amount owed, $%-7.2f", get_amount_owed(boat));
+	printf("That is more than the amount owed, $%.2f.\n", get_amount_owed(boat));
     } else {
         set_amount_owed(boat, (get_amount_owed(boat) - payment));
     }
