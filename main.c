@@ -12,12 +12,18 @@
 #include "mainfunctions.h"
 //*************************************************************************************************
 int main(int argc, char* argv[]) {
-
-    char initinput, userinput;
+    
+    //*****************************************************************************************
+    // declare variables.
+    char userinput;
     FILE* data_file;
     DatabaseType database;
     int size = 0;
 
+    // check command line arguments for a provided file.
+    // if it exists, open it and populate the database with the boats provided.
+    // if not, exit.
+    // check for file open/close errors too.
     if (argc < 2) {
 	printf("No file provided! Exiting...\n");
 	exit(EXIT_FAILURE);
@@ -35,11 +41,12 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    // print welcome message.
+    //*****************************************************************************************
     printf("Welcome to the Boat Management System\n");
     printf("-------------------------------------\n");
-
+    
     // main menu implementation with a switch statement.
+    // while input is not X or x, continue giving the menu to the user and processing actions.
     printf("\n");
     printf("(I)nventory, (A)dd, (R)emove, (P)ayment, (M)onth, e(X)it : ");
     scanf(" %c", &userinput);
@@ -73,9 +80,12 @@ int main(int argc, char* argv[]) {
 	printf("\n");
 	printf("(I)nventory, (A)dd, (R)emove, (P)ayment, (M)onth, e(X)it : ");
 	scanf(" %1c", &userinput);
-    }
     
+    }
+
+    //*****************************************************************************************
     // save the file using the same name, free the data, and exit.
+    // handle any open/close errors along the way.
     printf("\n");
     printf("Exiting the Boat Management System\n");
 
@@ -94,6 +104,7 @@ int main(int argc, char* argv[]) {
     free_database(database, size);
 
     return EXIT_SUCCESS;
+    //*****************************************************************************************
 
 }
 //*************************************************************************************************
