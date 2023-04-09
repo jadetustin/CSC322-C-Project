@@ -47,7 +47,6 @@ void populate(DatabaseType database, int* size, FILE* file) {
         *size = *size + 1;
     }
 
-    // qsort(database, *size, sizeof(BoatDataType), compare_boats);
     return;
     
 }

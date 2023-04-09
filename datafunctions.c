@@ -7,7 +7,10 @@
 #include "constants.h"
 //*************************************************************************************************
 int compare_boats(const void* boat1, const void* boat2) {
-    return strcasecmp(get_name((BoatDataType* )boat1), get_name((BoatDataType*) boat2));
+    BoatDataType* boatA = (BoatDataType*)boat1;
+    BoatDataType* boatB = (BoatDataType*)boat2;
+    int result = strcasecmp(get_name(boatA), get_name(boatB));
+    return result;
 }
 //*************************************************************************************************
 int compare_entry(String entry, BoatDataType* boat) {
